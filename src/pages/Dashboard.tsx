@@ -155,7 +155,7 @@ const Dashboard = () => {
                   Token: {token ? "Ativo" : "Inativo"}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Permissões: {permissoes.length > 0 ? permissoes.join(", ") : "Nenhuma"}
+                  Permissões: {Array.isArray(permissoes) && permissoes.length > 0 ? permissoes.join(", ") : "Nenhuma"}
                 </p>
               </div>
             </CardContent>
@@ -180,7 +180,7 @@ const Dashboard = () => {
           </Card>
 
           {/* Módulos baseados em permissões */}
-          {permissoes.includes("1") && (
+          {Array.isArray(permissoes) && permissoes.includes("1") && (
             <Card>
               <CardHeader>
                 <CardTitle>Módulo 1</CardTitle>
@@ -194,7 +194,7 @@ const Dashboard = () => {
             </Card>
           )}
 
-          {permissoes.includes("2") && (
+          {Array.isArray(permissoes) && permissoes.includes("2") && (
             <Card>
               <CardHeader>
                 <CardTitle>Módulo 2</CardTitle>
@@ -208,7 +208,7 @@ const Dashboard = () => {
             </Card>
           )}
 
-          {permissoes.includes("3") && (
+          {Array.isArray(permissoes) && permissoes.includes("3") && (
             <Card>
               <CardHeader>
                 <CardTitle>Módulo 3</CardTitle>
