@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { LogOut, Shield, User } from "lucide-react";
+import { apiRequest } from "@/lib/api";
 
 const Dashboard = () => {
   const [permissoes, setPermissoes] = useState<string[]>([]);
@@ -47,7 +48,7 @@ const Dashboard = () => {
 
   const makeAuthenticatedRequest = async () => {
     try {
-      const response = await fetch("https://<minha-api>.railway.app/protected-route", {
+      const response = await apiRequest("/protected-route", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,

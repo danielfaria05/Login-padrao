@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, LogIn, User, Lock } from "lucide-react";
+import { apiRequest } from "@/lib/api";
 
 interface LoginResponse {
   token: string;
@@ -43,7 +44,7 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
-      const response = await fetch("https://<minha-api>.railway.app/login", {
+      const response = await apiRequest("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
