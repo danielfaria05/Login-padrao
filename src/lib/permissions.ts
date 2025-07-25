@@ -66,7 +66,10 @@ export const getFieldPermission = (userPermissions: string[], fieldName: string)
   return fieldPermissions[fieldName] || { visible: false, editable: false };
 };
 
-export const canAccessProducts = (userPermissions: string[]): boolean => {
+export const canAccessProducts = (userPermissions: string[] | null | undefined): boolean => {
   // Verifica se o usuário tem permissão para acessar produtos
+  if (!userPermissions || !Array.isArray(userPermissions)) {
+    return false;
+  }
   return userPermissions.some(p => p === "1" || p === "2");
 };
