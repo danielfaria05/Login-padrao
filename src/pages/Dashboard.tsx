@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Shield, User } from "lucide-react";
+import { LogOut, Shield, User, Package } from "lucide-react";
 import { apiRequest } from "@/lib/api";
+import { canAccessProducts } from "@/lib/permissions";
 
 const Dashboard = () => {
   const [permissoes, setPermissoes] = useState<string[]>([]);
   const [token, setToken] = useState<string | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Verificar se há token no localStorage
@@ -112,6 +115,32 @@ const Dashboard = () => {
 
         {/* Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Card de Produtos */}
+          {canAccessProducts(permissoes) && (
+            <Card 
+              className="hover:shadow-lg transition-shadow cursor-pointer border-primary/20"
+              onClick={() => navigate('/produtos')}
+            >
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="h-5 w-5 text-primary" />
+                  Cadastro de Produtos
+                </CardTitle>
+                <CardDescription>
+                  Gerencie o cadastro de produtos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Consulte e mantenha as informações dos produtos do sistema.
+                </p>
+                <Button className="mt-4 w-full" variant="outline">
+                  Acessar Módulo
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Token Info */}
           <Card>
             <CardHeader>
