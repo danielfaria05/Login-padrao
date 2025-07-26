@@ -210,7 +210,7 @@ const Produtos = () => {
           <CardHeader>
             <CardTitle>Buscar Produto</CardTitle>
             <CardDescription>
-              Digite o código do produto para buscar ou criar um novo cadastro
+              Informe o código do produto para buscar ou criar um novo cadastro
             </CardDescription>
           </CardHeader>
           <CardContent>
