@@ -66,10 +66,24 @@ export const getFieldPermission = (userPermissions: string[], fieldName: string)
   return fieldPermissions[fieldName] || { visible: false, editable: false };
 };
 
-export const canAccessProducts = (userPermissions: string[] | null | undefined): boolean => {
+export const canAccessProducts = (userPermissions: string[] | string | null | undefined): boolean => {
+  console.log("canAccessProducts - Permissões recebidas:", userPermissions, "Tipo:", typeof userPermissions);
+  
   // Verifica se o usuário tem permissão para acessar produtos
-  if (!userPermissions || !Array.isArray(userPermissions)) {
+  if (!userPermissions) {
+    console.log("canAccessProducts - Sem permissões");
     return false;
   }
-  return userPermissions.some(p => p === "1" || p === "2");
+  
+  // Normalizar para array se for string
+  const permissionsArray = Array.isArray(userPermissions) 
+    ? userPermissions 
+    : [userPermissions];
+  
+  console.log("canAccessProducts - Permissões normalizadas:", permissionsArray);
+  
+  const hasAccess = permissionsArray.some(p => p === "1" || p === "2");
+  console.log("canAccessProducts - Tem acesso:", hasAccess);
+  
+  return hasAccess;
 };

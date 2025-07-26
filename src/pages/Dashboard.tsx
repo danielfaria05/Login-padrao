@@ -28,7 +28,9 @@ const Dashboard = () => {
     
     if (storedPermissoes) {
       try {
-        setPermissoes(JSON.parse(storedPermissoes));
+        const parsedPermissoes = JSON.parse(storedPermissoes);
+        console.log("Dashboard - Permissões carregadas do localStorage:", parsedPermissoes);
+        setPermissoes(parsedPermissoes);
       } catch (error) {
         console.error("Erro ao parsear permissões:", error);
       }

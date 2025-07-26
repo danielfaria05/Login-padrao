@@ -9,7 +9,7 @@ import { apiRequest } from "@/lib/api";
 
 interface LoginResponse {
   token: string;
-  permissoes?: string[];
+  permissoes?: string | string[];
 }
 
 const LoginForm = () => {
@@ -64,12 +64,20 @@ const LoginForm = () => {
 
       const data: LoginResponse = await response.json();
       
+      console.log("Resposta da API:", data);
+      
       // Armazenar token no localStorage
       localStorage.setItem("token", data.token);
       
-      // Armazenar permissões se disponíveis
+      // Armazenar permissões se disponíveis - normalizar para array
       if (data.permissoes) {
-        localStorage.setItem("permissoes", JSON.stringify(data.permissoes));
+        // Normalizar permissões para array se vier como string
+        const permissoesArray = Array.isArray(data.permissoes) 
+          ? data.permissoes 
+          : [data.permissoes];
+        
+        console.log("Permissões normalizadas:", permissoesArray);
+        localStorage.setItem("permissoes", JSON.stringify(permissoesArray));
       }
 
       toast({
