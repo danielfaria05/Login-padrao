@@ -44,8 +44,8 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL; // Obtém a URL da API a partir da variável de ambiente
-      const response = await fetch(`${apiUrl}/login`, {
+      const apiUrl = import.meta.env.VITE_API_URL; // Obtém a base URL do backend
+      const response = await fetch(`${apiUrl}/login`, { ... }); // Monta a URL corretamente
         method: "POST",
         headers: {
           "Content-Type": "application/json",
