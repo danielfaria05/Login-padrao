@@ -11,55 +11,41 @@ import { apiRequest } from "@/lib/api";
 import { Search, ArrowLeft, Loader2 } from "lucide-react";
 
 interface ProdutoData {
-  codigoProduto: string;
-  descricao: string;
-  unidadeMedida: string;
-  categoria: string;
-  subcategoria: string;
-  marca: string;
-  preco: string;
-  precoPromocional: string;
-  estoque: string;
-  estoqueMinimo: string;
-  peso: string;
-  dimensoes: string;
-  codigoBarras: string;
-  fornecedor: string;
-  ncm: string;
-  cst: string;
-  aliquotaICMS: string;
-  aliquotaIPI: string;
-  origem: string;
-  ativo: boolean;
-  observacoes: string;
+  codprod?: string;
+  codprodprinc?: string;
+  numoriginal?: string;
+  codfab?: string;
+  descricao?: string;
+  informacoestecnicas?: string;
+  codfornec?: string;
+  fornecedor?: string;
+  codepto?: string;
+  departamento?: string;
+  codsec?: string;
+  secao?: string;
+  codmarca?: string;
+  marca?: string;
+  codncmex?: string;
+  pesoliq?: number;
+  pesobruto?: number;
+  codauxiliartrib?: string;
+  codauxiliar?: string;
+  obs2?: string;
+  alturam3?: number;
+  larguram3?: number;
+  comprimentom3?: number;
+  tipoprod?: string;
+  embalagemmaster?: string;
+  descricao1?: string;
+  descricao2?: string;
+  descricao3?: string;
+  dtexclusao?: string;
 }
 
 const Produtos = () => {
   const [permissoes, setPermissoes] = useState<string[]>([]);
   const [codigoBusca, setCodigoBusca] = useState("");
-  const [produtoData, setProdutoData] = useState<ProdutoData>({
-    codigoProduto: "",
-    descricao: "",
-    unidadeMedida: "",
-    categoria: "",
-    subcategoria: "",
-    marca: "",
-    preco: "",
-    precoPromocional: "",
-    estoque: "",
-    estoqueMinimo: "",
-    peso: "",
-    dimensoes: "",
-    codigoBarras: "",
-    fornecedor: "",
-    ncm: "",
-    cst: "",
-    aliquotaICMS: "",
-    aliquotaIPI: "",
-    origem: "",
-    ativo: true,
-    observacoes: ""
-  });
+  const [produtoData, setProdutoData] = useState<ProdutoData>({});
   const [produtoCarregado, setProdutoCarregado] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -123,8 +109,7 @@ const Produtos = () => {
       } else if (response.status === 404) {
         // Produto não encontrado - carregar formulário vazio para novo produto
         setProdutoData({
-          ...produtoData,
-          codigoProduto: codigoBusca
+          codprod: codigoBusca
         });
         setProdutoCarregado(true);
         toast({
@@ -152,29 +137,7 @@ const Produtos = () => {
   };
 
   const novoProduto = () => {
-    setProdutoData({
-      codigoProduto: "",
-      descricao: "",
-      unidadeMedida: "",
-      categoria: "",
-      subcategoria: "",
-      marca: "",
-      preco: "",
-      precoPromocional: "",
-      estoque: "",
-      estoqueMinimo: "",
-      peso: "",
-      dimensoes: "",
-      codigoBarras: "",
-      fornecedor: "",
-      ncm: "",
-      cst: "",
-      aliquotaICMS: "",
-      aliquotaIPI: "",
-      origem: "",
-      ativo: true,
-      observacoes: ""
-    });
+    setProdutoData({});
     setCodigoBusca("");
     setProdutoCarregado(false);
   };
