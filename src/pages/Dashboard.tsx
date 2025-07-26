@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Shield, User, Package, ArrowDown, ArrowUp, BarChart3, Archive } from "lucide-react";
+import { LogOut, User, Package, ArrowDown, ArrowUp, BarChart3 } from "lucide-react";
 import { apiRequest } from "@/lib/api";
 import { canAccessProducts } from "@/lib/permissions";
 
@@ -53,35 +53,6 @@ const Dashboard = () => {
     setTimeout(() => {
       window.location.href = "/";
     }, 1000);
-  };
-
-  const makeAuthenticatedRequest = async () => {
-    try {
-      const response = await apiRequest("/protected-route", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        toast({
-          title: "Requisição bem-sucedida",
-          description: "Dados obtidos com sucesso!",
-        });
-        console.log("Dados:", data);
-      } else {
-        throw new Error("Erro na requisição");
-      }
-    } catch (error) {
-      toast({
-        title: "Erro na requisição",
-        description: "Verifique sua conexão e tente novamente.",
-        variant: "destructive",
-      });
-    }
   };
 
   if (!token) {
@@ -210,86 +181,6 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Token Info */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Shield className="w-5 h-5" />
-                <span>Informações de Autenticação</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  Token: {token ? "Ativo" : "Inativo"}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Permissões: {Array.isArray(permissoes) && permissoes.length > 0 ? permissoes.join(", ") : "Nenhuma"}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Exemplo de requisição autenticada */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Exemplo de Requisição</CardTitle>
-              <CardDescription>
-                Teste uma requisição autenticada para a API
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button 
-                onClick={makeAuthenticatedRequest}
-                className="w-full"
-              >
-                Fazer Requisição Protegida
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Módulos baseados em permissões */}
-          {Array.isArray(permissoes) && permissoes.includes("1") && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Módulo 1</CardTitle>
-                <CardDescription>Disponível para permissão "1"</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Este módulo está disponível para você.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          {Array.isArray(permissoes) && permissoes.includes("2") && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Módulo 2</CardTitle>
-                <CardDescription>Disponível para permissão "2"</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Este módulo está disponível para você.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          {Array.isArray(permissoes) && permissoes.includes("3") && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Módulo 3</CardTitle>
-                <CardDescription>Disponível para permissão "3"</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Este módulo está disponível para você.
-                </p>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </div>
     </div>
