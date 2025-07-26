@@ -91,10 +91,13 @@ const Produtos = () => {
 
     setIsLoading(true);
     try {
+      const token = localStorage.getItem('token');
+      console.log('Token sendo enviado:', token);
+      
       const response = await apiRequest(`/produtos?codigo=${encodeURIComponent(codigoBusca)}`, {
         method: "GET",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem('token')}`
+          "Authorization": `Bearer ${token}`
         }
       });
 
@@ -117,6 +120,7 @@ const Produtos = () => {
           description: "Você pode cadastrar um novo produto com este código."
         });
       } else {
+        console.log('Erro na resposta da API:', response.status, await response.text());
         throw new Error("Erro ao buscar produto");
       }
     } catch (error) {
