@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Shield, User, Package } from "lucide-react";
+import { LogOut, Shield, User, Package, ArrowDown, ArrowUp, BarChart3, Archive } from "lucide-react";
 import { apiRequest } from "@/lib/api";
 import { canAccessProducts } from "@/lib/permissions";
 
 const Dashboard = () => {
   const [permissoes, setPermissoes] = useState<string[]>([]);
   const [token, setToken] = useState<string | null>(null);
+  const [nomeUsuario, setNomeUsuario] = useState<string>("");
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const Dashboard = () => {
     // Verificar se há token no localStorage
     const storedToken = localStorage.getItem("token");
     const storedPermissoes = localStorage.getItem("permissoes");
+    const storedNome = localStorage.getItem("nomeUsuario");
 
     if (!storedToken) {
       // Redirecionar para login se não houver token
@@ -25,6 +27,7 @@ const Dashboard = () => {
     }
 
     setToken(storedToken);
+    setNomeUsuario(storedNome || "Usuário");
     
     if (storedPermissoes) {
       try {
@@ -40,6 +43,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("permissoes");
+    localStorage.removeItem("nomeUsuario");
     
     toast({
       title: "Logout realizado",
@@ -101,7 +105,7 @@ const Dashboard = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-              <p className="text-sm text-muted-foreground">Bem-vindo ao sistema</p>
+              <p className="text-sm text-muted-foreground">Bem-vindo ao sistema {nomeUsuario}</p>
             </div>
           </div>
           
@@ -117,7 +121,7 @@ const Dashboard = () => {
 
         {/* Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Card de Produtos */}
+          {/* Submenu - Cadastro de Produtos */}
           {canAccessProducts(permissoes) && (
             <Card 
               className="hover:shadow-lg transition-shadow cursor-pointer border-primary/20"
@@ -142,6 +146,69 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           )}
+
+          {/* Submenu - Entradas */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-secondary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ArrowDown className="h-5 w-5 text-green-600" />
+                Entradas
+              </CardTitle>
+              <CardDescription>
+                Controle de entradas de mercadorias
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Registre e gerencie as entradas de produtos no estoque.
+              </p>
+              <Button className="mt-4 w-full" variant="outline">
+                Acessar Módulo
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Submenu - Saídas */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-secondary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ArrowUp className="h-5 w-5 text-red-600" />
+                Saídas
+              </CardTitle>
+              <CardDescription>
+                Controle de saídas de mercadorias
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Registre e gerencie as saídas de produtos do estoque.
+              </p>
+              <Button className="mt-4 w-full" variant="outline">
+                Acessar Módulo
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Submenu - Inventários */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-secondary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-blue-600" />
+                Inventários
+              </CardTitle>
+              <CardDescription>
+                Gestão de inventários e contagens
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Realize contagens e ajustes de inventário do estoque.
+              </p>
+              <Button className="mt-4 w-full" variant="outline">
+                Acessar Módulo
+              </Button>
+            </CardContent>
+          </Card>
 
           {/* Token Info */}
           <Card>

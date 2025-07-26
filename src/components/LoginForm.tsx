@@ -9,6 +9,7 @@ import { apiRequest } from "@/lib/api";
 
 interface LoginResponse {
   token: string;
+  nome: string;
   permissoes?: string | string[];
 }
 
@@ -68,6 +69,9 @@ const LoginForm = () => {
       
       // Armazenar token no localStorage
       localStorage.setItem("token", data.token);
+      
+      // Armazenar nome do usuário
+      localStorage.setItem("nomeUsuario", data.nome);
       
       // Armazenar permissões se disponíveis - normalizar para array
       if (data.permissoes) {
